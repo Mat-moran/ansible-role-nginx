@@ -2,11 +2,18 @@
 #--------------------------------------------------
 # Install NGINX
 #--------------------------------------------------
-# TODO role de nginx
+- name: Uninstall Nginx Server
+  apt:
+    name: ["nginx", "nginx-common"]
+    state: absent
+    purge: yes
+    force: yes
+
 - name: Install Nginx Server
   apt:
-    name: "nginx"
+    name: ["nginx", "nginx-common"]
     install_recommends: no
+    update_cache: yes
   tags: proxy
 
 - name: Nginx started
@@ -24,6 +31,10 @@
     dest: "/etc/nginx/sites-available/odoo"
   notify: restart nginx
   tags: proxy
+
+- import_role:
+    name: ansible-role-certbot
+  
 
 - name: "Enable nginx configuration"
   file:
