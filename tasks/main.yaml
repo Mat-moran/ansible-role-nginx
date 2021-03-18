@@ -8,6 +8,7 @@
     state: absent
     purge: yes
     force: yes
+  tags: proxy
 
 - name: Install Nginx Server
   apt:
@@ -30,10 +31,11 @@
     src: odoo.j2
     dest: "/etc/nginx/sites-available/odoo"
   notify: restart nginx
-  tags: proxy
+  tags: proxy, certbot
 
 - import_role:
     name: ansible-role-certbot
+  tags: proxy, certbot
   
 
 - name: "Enable nginx configuration"
@@ -42,11 +44,11 @@
     dest: "/etc/nginx/sites-enabled/odoo"
     state: link
   notify: restart nginx
-  tags: proxy
+  tags: proxy, certbot
 
 - name: Remove default Nginx configuration
   file:
     path: "/etc/nginx/sites-enabled/default"
     state: absent
   notify: restart nginx
-  tags: proxy
+  tags: proxy, certbot
