@@ -28,7 +28,7 @@
 #--------------------------------------------------
 - name: Configure Nginx
   template:
-    src: odoo.j2
+    src: "{{ nginx_template }}.j2"
     dest: "/etc/nginx/sites-available/odoo"
   notify: restart nginx
   tags: proxy, certbot

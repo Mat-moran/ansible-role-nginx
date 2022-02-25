@@ -1,2 +1,3 @@
 SSL_certificate: false
 url: www.example.es
+nginx_template: basic
